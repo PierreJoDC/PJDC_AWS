@@ -1,13 +1,13 @@
 pipeline {
     agent any
     environment {
-        FLASK_APP = "PJ_api_backend.py"
+        FLASK_APP = "app.py"
         FLASK_ENV = "development"
     }
     stages {
         stage('Checkout') {
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: 'master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/PierreJoDC.git']])
+                checkout([$class: 'GitSCM', branches: [[name: 'master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/PierreJoDC/PJDC_AWS.git']]])
             }
         }
         stage('Build') {
@@ -17,12 +17,12 @@ pipeline {
         }
         stage('Test') {
             steps {
-                sh 'unittest test_app.py'
+                sh 'pytest unit_tests.py'
             }
         }
         stage('Run API') {
             steps {
-                sh 'python PJ_api_backend.py &'
+                sh 'python app.py &'
             }
         }
         stage('Merge to Dev') {
@@ -32,7 +32,7 @@ pipeline {
         }
         stage('Deploy to Dev') {
             steps {
-                sh 'echo "http://localhost:5000/"'
+                sh 'echo "http://localhost:5000"'
             }
         }
     }
