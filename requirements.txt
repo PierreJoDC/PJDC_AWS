@@ -1,0 +1,6 @@
+flask-cors
+flask
+python
+unittest
+pytest
+json
