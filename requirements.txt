@@ -2,4 +2,3 @@ flask-cors
 flask
 unittest
 pytest
-json
